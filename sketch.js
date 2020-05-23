@@ -2,15 +2,17 @@ var car,Ecar1,Ecar2,finished;
 var track;
 var parking,finish;
 var stopper1,stopper2,stopper3,stopper4,stopper5,stopper6;
-
+var life;
 function preload(){
   track = loadImage("images/track_1.jpg");
   car_img = loadImage("images/car5.jpg");
+  car2_img = loadImage("car7.jpg");
   ecar_img = loadImage("images/car6.jpg");
   nail_img = loadImage("images/nail_bed.jpg"); 
 }
 
 function setup(){
+    life = 5;
     console.log(displayWidth + " " + displayHeight);
     canvas = createCanvas(displayWidth,displayHeight);
     finished = createElement('h1');
@@ -73,11 +75,15 @@ function draw(){
         }
     }
 
-    if (car.y > 4040) {
+    if (car.y > 4040 && life>0) {
         stroke("red");
         fill("red");
         finished.html("Finished !!!!!!!!");
         finished.position(displayWidth/2 - 70, displayHeight/2+100);
+    }else if (car.y > 4040 && life<0){
+        stroke("red");
+        fill("red");
+       text("GHOSTS CANNOT ENTER",car.x-90,car.y-90);
     }
     
     if (car.x<290) {
@@ -91,11 +97,21 @@ function draw(){
     if ((isTouching(car,stopper1)) || (isTouching(car,stopper2)) ||(isTouching(car,stopper3)) ||(isTouching(car,stopper4) )
         ||(isTouching(car,stopper5))||(isTouching(car,stopper6))||(isTouching(car,Ecar1))||(isTouching(car,Ecar2))) {
         console.log("DIED !!!!!");
-        car.x = 200;
-        car.y = 10;        
+             
+        life = life-1
+        if (life<=0) {
+            console.log("DIED Completly!!!!!");
+            car.addImage("car",car2_img);
+            stroke("white");
+            fill("white");
+            text("YOU ARE A GHOST NOW",car.x-50,car.y-90);
+        }else{
+            car.x = 200;
+            car.y = 10;   
+        }
         camera.position.x = displayWidth/2;
         camera.position.y = car.y;
     }
-
+   
     drawSprites();
 }
