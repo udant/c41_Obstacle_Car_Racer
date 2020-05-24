@@ -47,8 +47,10 @@ function draw(){
     image(track,0,-300,displayWidth,displayHeight*6);
     console.log("random placed car1",Ecar1.x + " "+Ecar1.y);
     console.log("random placed car2",Ecar2.x + " "+Ecar2.y);
-    
-    if (keyIsDown(DOWN_ARROW)) {
+    stroke("red");
+    fill("white");
+    text("LIFECOUNT  "+life,car.x,car.y-150);
+    if (keyIsDown(DOWN_ARROW) && life>0) {
         car.y = car.y+20;
         camera.position.x = displayWidth/2;
         camera.position.y = car.y;
@@ -56,7 +58,7 @@ function draw(){
             car.y=4050;
         }
     }
-    else if (keyIsDown(RIGHT_ARROW)) {
+    else if (keyIsDown(RIGHT_ARROW) && life>0) {
         car.x = car.x+20;
         car.y = car.y+20;
         camera.position.x = displayWidth/2;
@@ -65,7 +67,7 @@ function draw(){
             car.y=4050;
         }
     }
-    else if (keyIsDown(LEFT_ARROW)) {
+    else if (keyIsDown(LEFT_ARROW) && life>0) {
         car.x = car.x-20;
         car.y = car.y+20;
         camera.position.x = displayWidth/2;
@@ -75,15 +77,11 @@ function draw(){
         }
     }
 
-    if (car.y > 4040 && life>0) {
+    if (car.y > 4040) {
         stroke("red");
         fill("red");
         finished.html("Finished !!!!!!!!");
         finished.position(displayWidth/2 - 70, displayHeight/2+100);
-    }else if (car.y > 4040 && life<0){
-        stroke("red");
-        fill("red");
-       text("GHOSTS CANNOT ENTER",car.x-90,car.y-90);
     }
     
     if (car.x<290) {
